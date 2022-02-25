@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from "@emotion/styled"
+import useSelectMoneda from "../hooks/useSelectMoneda"
 
 const InputSubmit = styled.input`
   background-color: #9497ff;
@@ -20,6 +21,11 @@ const InputSubmit = styled.input`
 `
 
 const Formulario = () => {
+
+  const [ SelectMonedas ] = useSelectMoneda()
+
+  SelectMonedas()
+
   return (
     <form>
       
