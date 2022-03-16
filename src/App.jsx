@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 import styled from "@emotion/styled";
 import Formulario from "./components/Formulario";
 import Resultado from "./components/Resultado";
-import Spiner from "./components/Spiner";
+import Spinner from "./components/Spinner";
 import ImagenCripto from "./img/imagen-criptos.png";
 
 const Contenedor = styled.div`
@@ -43,31 +43,28 @@ const Heading = styled.h1`
 `;
 
 function App() {
-
-	const [monedas, setMonedas] = useState({})
-	const [cotizacion, setCotizacion] = useState({})
-	const [cargando, setCargando] = useState(false)
-
+	const [monedas, setMonedas] = useState({});
+	const [cotizacion, setCotizacion] = useState({});
+	const [cargando, setCargando] = useState(false);
 
 	// Consultar API para hacer la cotizacion entre las dos monedas
 	const cotizarCripto = async () => {
-		setCargando(true)
-		setCotizacion({})
-		const {moneda, criptomonedas} = monedas
-		const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomonedas}&tsyms=${moneda}`
-		const respuesta = await fetch(url)
-		const resultado = await respuesta.json()
+		setCargando(true);
+		setCotizacion({});
+		const {moneda, criptomonedas} = monedas;
+		const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomonedas}&tsyms=${moneda}`;
+		const respuesta = await fetch(url);
+		const resultado = await respuesta.json();
 		// Consultar API de Forma dinamica ya que varian las KEY segun la moneda que se vaya  a cotizar
-		setCotizacion(resultado.DISPLAY[criptomonedas][moneda])
-		setCargando(false)
-	}
-
+		setCotizacion(resultado.DISPLAY[criptomonedas][moneda]);
+		setCargando(false);
+	};
 
 	useEffect(() => {
 		if (Object.keys(monedas).length > 0) {
-			cotizarCripto()
+			cotizarCripto();
 		}
-	},[monedas])
+	}, [monedas]);
 
 	return (
 		<Contenedor>
@@ -76,7 +73,7 @@ function App() {
 				<Heading>Cotiza Criptomonedas al Instante</Heading>
 				<Formulario setMonedas={setMonedas} />
 
-				{cargando && <Spiner />}
+				{cargando && <Spinner />}
 
 				{cotizacion.PRICE && <Resultado cotizacion={cotizacion} />}
 			</div>

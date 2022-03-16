@@ -1,6 +1,6 @@
-import "../styles/Spiner.css"
+import "../styles/Spinner.css";
 
-const Spiner = () => {
+const Spinner = () => {
 	return (
 		<div className="sk-circle">
 			<div className="sk-circle1 sk-child"></div>
@@ -19,4 +19,4 @@ const Spiner = () => {
 	);
 };
 
-export default Spiner;
+export default Spinner;
