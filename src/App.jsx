@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import styled from "@emotion/styled";
 import Formulario from "./components/Formulario";
 import Resultado from "./components/Resultado";
+import Spiner from "./components/Spiner";
 import ImagenCripto from "./img/imagen-criptos.png";
 
 const Contenedor = styled.div`
@@ -45,16 +46,20 @@ function App() {
 
 	const [monedas, setMonedas] = useState({})
 	const [cotizacion, setCotizacion] = useState({})
+	const [cargando, setCargando] = useState(false)
 
 
 	// Consultar API para hacer la cotizacion entre las dos monedas
 	const cotizarCripto = async () => {
+		setCargando(true)
+		setCotizacion({})
 		const {moneda, criptomonedas} = monedas
 		const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomonedas}&tsyms=${moneda}`
 		const respuesta = await fetch(url)
 		const resultado = await respuesta.json()
 		// Consultar API de Forma dinamica ya que varian las KEY segun la moneda que se vaya  a cotizar
 		setCotizacion(resultado.DISPLAY[criptomonedas][moneda])
+		setCargando(false)
 	}
 
 
@@ -70,6 +75,8 @@ function App() {
 			<div>
 				<Heading>Cotiza Criptomonedas al Instante</Heading>
 				<Formulario setMonedas={setMonedas} />
+
+				{cargando && <Spiner />}
 
 				{cotizacion.PRICE && <Resultado cotizacion={cotizacion} />}
 			</div>
